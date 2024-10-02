@@ -1,13 +1,27 @@
 const express = require('express');
 const { getSubtitles, getVideoDetails } = require('youtube-caption-extractor');
+require('dotenv').config(); // Para usar variáveis de ambiente
 
 const app = express();
-const port = process.env.PORT || 3000; // Porta que a API vai rodar
+const port = process.env.PORT || 3000;
+
+// Middleware para autenticação com chave de API
+const authenticateAPIKey = (req, res, next) => {
+    const apiKey = req.header('x-api-key');
+    if (apiKey && apiKey === process.env.API_KEY) {
+        next(); // Se a chave for válida, continua para o próximo middleware ou rota
+    } else {
+        res.status(403).json({ error: 'Acesso negado. Chave de API inválida ou ausente.' });
+    }
+};
+
+// Use o middleware de autenticação antes de suas rotas protegidas
+app.use(authenticateAPIKey);
 
 // Rota para buscar legendas
 app.get('/api/subtitles', async (req, res) => {
     const videoID = req.query.videoID;
-    const lang = req.query.lang || 'en'; // Definindo inglês como idioma padrão
+    const lang = req.query.lang || 'pt'; // Idioma padrão é pt
 
     if (!videoID) {
         return res.status(400).json({ error: 'videoID é necessário' });
@@ -24,7 +38,7 @@ app.get('/api/subtitles', async (req, res) => {
 // Rota para buscar detalhes do vídeo
 app.get('/api/videodetails', async (req, res) => {
     const videoID = req.query.videoID;
-    const lang = req.query.lang || 'en'; // Idioma padrão é inglês
+    const lang = req.query.lang || 'pt'; // Idioma padrão é pt
 
     if (!videoID) {
         return res.status(400).json({ error: 'videoID é necessário' });
@@ -38,7 +52,7 @@ app.get('/api/videodetails', async (req, res) => {
     }
 });
 
-// Iniciar o servidor
+// Inicia o servidor
 app.listen(port, () => {
-    console.log(`API rodando em http://localhost:${port}`);
+    console.log(`API rodando na porta ${port}`);
 });
