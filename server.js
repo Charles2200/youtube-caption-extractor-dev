@@ -4,19 +4,6 @@ const { getSubtitles, getVideoDetails } = require('youtube-caption-extractor');
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Middleware para autenticação com chave de API
-const authenticateAPIKey = (req, res, next) => {
-    const apiKey = req.header('x-api-key');
-    if (apiKey && apiKey === process.env.API_KEY) {
-        next(); // Se a chave for válida, continua para o próximo middleware ou rota
-    } else {
-        res.status(403).json({ error: 'Acesso negado. Chave de API inválida ou ausente.' });
-    }
-};
-
-// Use o middleware de autenticação antes de suas rotas protegidas
-app.use(authenticateAPIKey);
-
 // Rota para buscar legendas
 app.get('/api/subtitles', async (req, res) => {
     const videoID = req.query.videoID;
