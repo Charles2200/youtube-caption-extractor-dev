@@ -1,6 +1,5 @@
 const express = require('express');
 const { getSubtitles, getVideoDetails } = require('youtube-caption-extractor');
-require('dotenv').config(); // Para usar variáveis de ambiente
 
 const app = express();
 const port = process.env.PORT || 3000;
