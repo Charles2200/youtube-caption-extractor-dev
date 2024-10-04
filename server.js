@@ -2,7 +2,7 @@ const express = require('express');
 const { getSubtitles, getVideoDetails } = require('youtube-caption-extractor');
 
 const app = express();
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 3000;
 
 // Rota para buscar legendas
 app.get('/api/subtitles', async (req, res) => {
