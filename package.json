@@ -34,6 +34,8 @@
   "dependencies": {
     "@types/he": "^1.2.0",
     "he": "^1.2.0",
+    "express": "^4.21.0",
+    "youtube-caption-extractor": "^1.4.3",
     "striptags": "^3.2.0",
     "ts-node": "^10.9.1",
     "typescript": "^5.0.4"
