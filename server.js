@@ -40,5 +40,5 @@ app.get('/api/videodetails', async (req, res) => {
 
 // Inicia o servidor
 app.listen(port, () => {
-    console.log(`API rodando na porta ${port}`);
+    console.log(`API rodando na porta: ${port}`);
 });
